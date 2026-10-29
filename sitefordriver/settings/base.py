@@ -15,7 +15,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 #BASE_DIR / '.env' формирует путь к файлу .env.
 #load_dotenv(...) читает переменные из этого файла и добавляет их в окружение Python.
