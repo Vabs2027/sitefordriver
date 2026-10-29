@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load custom_filters_topic %}
+
+
+<h1>{{ topic.title }}</h1>
+<!--<p>{{ topic.description|safe }}</p>-->
+
+
+{% for point in topic.points.all %}
+    <div class="section-container">
+        <p>{{ point.text|add_comment_buttons|safe }}</p>
+
+        {% for section in point.sections.all %}
+            <button class="toggle-button" data-section-id="{{ section.id }}">Коментарі</button>
+
+        <!-- Блок комментариев (изначально скрыт) -->
+            <div id="comment-section-{{ section.id }}" class="comment-section hidden">
+                    <p>{{ section.description|add_comment_buttons|safe }}</p>
+
+                  <!-- Теперь описание будет внутри выпадающего блока -->
+        
+                 {% if section.image_section %}
+                    <img src="{{ section.image_section.url }}" alt="Картинка до пункту">
+                 {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+{% endfor %}
+
+<style>
+    .comment-section {
+        border: 1px solid #ccc;
+        padding: 10px;
+        margin-top: 10px;
+        background-color: #f9f9f9;
+    }
+    .hidden {
+        display: none;
+    }
+</style>
+
+{% endblock %}
+
+

@@ -1,0 +1,74 @@
+{% load static %}
+{% load driver_tags %}
+
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+
+    <!-- Свои стили -->
+    <link rel="stylesheet" href="{% static 'driver/css/styles.css' %}">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="{% static 'driver/images/main.ico' %}" type="image/x-icon">
+</head>
+
+<body>
+    <!-- Верхнее меню -->
+    <header class="bg-dark text-white p-3">
+        <div class="container">
+            <nav class="d-flex align-items-center">
+                <a href="{% url 'home' %}" class="me-auto">
+                    <img src="{% static 'driver/images/main.ico' %}" alt="Лого" width="40">
+                </a>
+                <ul class="nav">
+                    {% for m in menu %}
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="{% url m.url_name %}">{{ m.title }}</a>
+                        </li>
+                    {% endfor %}
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="{% url 'login' %}">
+                            <img src="{% static 'driver/images/lock_icon.png' %}" alt="Вход" width="20">
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <aside class="col-md-3 bg-light p-3">
+                <h4>Категории</h4>
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a href="{% url 'home' %}" class="nav-link">Усі категорії</a>
+                    </li>
+                    {% show_categories cat_selected %}
+                </ul>
+                <div class="mt-4">
+                    <p>Наш канал</p>
+                    <a href="https://www.youtube.com/channel/UClJzWfGWuGJL2t-3dYKcHTA/playlists" target="_blank">
+                        <img src="{% static 'driver/images/share_yt.png' %}" width="120">
+                    </a>
+                </div>
+            </aside>
+
+            <!-- Контент -->
+            <main class="col-md-9 p-4">
+                {% block breadcrumbs %}{% endblock %}
+                {% block content %}{% endblock %}
+            </main>
+        </div>
+    </div>
+
+    <script src="{% static 'driver/js/comments.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

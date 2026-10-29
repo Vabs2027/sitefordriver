@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load custom_filters_signs %}
+
+{% block content %}
+
+<div class="sign-detail-container">
+    <div class="category-name-container">
+        <p>{{ category.name }}</p> <!-- Название категории -->
+    </div>
+
+    <div class="image-container"> <!-- Контейнер для картинок -->
+        <p>{{ sign.full_name_code }}</p>
+
+        {% if sign.image %}
+            <div class="sign-image">
+                <img src="{{ sign.image.url }}" alt="{{ sign.name }}">
+            </div>
+        {% endif %}
+
+        {% if sign.real_life_image %}
+            <div class="real-life-image">
+                <img src="{{ sign.real_life_image.url }}" alt="Зразок у реальному житті">
+            </div>
+        {% endif %}
+    </div>
+
+    <div class="sign-description">
+<!--        <p>{{ sign.description|linkify_signs:"33,4"|safe }}</p>-->
+        <p>{{ sign.description|linkify_signs:"topic_id=33,category_id=1"|safe }}</p>
+    </div>
+
+     <div class="navigation-buttons"> <!-- Обертка для кнопок -->
+        {% if previous_sign %}<!-- if для избежания пустых ссылок, если, например, нет предыдущего знака или следующего знака. -->
+            <a href="{% url 'sign_detail' topic_id=topic_id category_id=category.id code=previous_sign.code %}" class="button">
+                <img src="{% static 'driver/images/back_icon.png' %}" alt="Пред знак" class="back-icon">Предыдущий знак
+            </a>
+        {% endif %}
+
+         <!--#В теге  url , sign.category.id будет динамически подставляться вместо <int:category_id>.
+                #Django автоматически генерирует корректный URL на основе значения sign.category.id.
+                 'category_detail' — это имя маршрута, заданное в urls.py.
+                  sign.category.id — это значение, которое передаётся для переменной category_id.-->
+         <div class="back_to_category">
+             <a href="{% url 'category_detail' topic_id=topic_id category_id=category.id %}" class="all-link">Всі знаки групи
+                 <img src="{% static 'driver/images/all_signs.png' %}" alt="Всі зна групи" class="all-icon">
+             </a>
+         </div>
+
+        {% if next_sign %}
+            <a href="{% url 'sign_detail' topic_id=topic_id category_id=category.id code=next_sign.code %}" class="button next-button">Следующий знак
+                <img src="{% static 'driver/images/next_icon.png' %}" alt="След знак" class="next-icon">
+            </a>
+        {% endif %}
+
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Все категории разметки</h1>
+
+<ol>
+    {% for category in categories %}
+        <li><a href="{% url 'road_marking_category_detail' topic_id=topic_id category_id=category.id %}">{{ category.name }}</a></li>
+    {% empty %}
+    <li>Категории не найдены</li>
+
+    {% endfor %}
+</ol>
+
+{% endblock %}

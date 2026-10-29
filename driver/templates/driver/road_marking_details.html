@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load custom_filters_markings %}
+
+{% block content %}
+
+<div class="marking-detail-container">
+    <div class="category-name-container">
+        <p>{{ category.name }}</p> <!-- Название категории -->
+    </div>
+</div>
+
+<div class="marking-detail">
+    <p>{{ marking.code }} - {{ marking.name }}</p>
+
+    {% if marking.image %}
+        <div class="marking-image">
+            <img src="{{ marking.image.url }}" alt="{{ marking.name }}">
+        </div>
+    {% endif %}
+
+    {% if marking.real_life_image %}
+        <div class="real-life-image">
+            <img src="{{ marking.real_life_image.url }}" alt="Зразок у реальному житті">
+        </div>
+    {% endif %}
+
+    <div class="marking-description">
+<!--        <p>{{ marking.description|safe }}</p>-->
+        <p>{{ marking.description|linkify_markings:"topic_id=34,category_id=2"|safe }}</p>
+    </div>
+</div>
+
+<div class="navigation-buttons-marking">
+    {% if previous_marking %}
+        <a href="{% url 'road_marking_details' topic_id=topic_id category_id=category.id code=previous_marking.code %}" class="button-marking">
+            <img src="{% static 'driver/images/back_icon.png' %}" alt="Пред разметка" class="back-icon-marking">
+            Предыдущая разметка
+        </a>
+    {% endif %}
+
+    <div class="back_to_category_markings">
+        <a href="{% url 'road_marking_category_detail' topic_id=topic_id category_id=category.id %}" class="all-link">
+            Уся розмітка категорії
+            <img src="{% static 'driver/images/all_signs.png' %}" alt="Всі розм групи" class="all-icon">
+        </a>
+    </div>
+
+    {% if next_marking %}
+        <a href="{% url 'road_marking_details' topic_id=topic_id category_id=category.id code=next_marking.code %}" class="button next-button-marking">
+            Наступна розмітка
+            <img src="{% static 'driver/images/next_icon.png' %}" alt="След розм" class="next-icon-marking">
+        </a>
+
+    {% endif %}
+</div>
+
+{% endblock %}

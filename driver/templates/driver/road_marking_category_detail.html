@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1><strong>Категорія розмітки:</strong></h1>
+<p class="category-name">{{ category.name }}</p> <!-- Название категории -->
+
+<a href="{% url 'road_marking_categories' topic_id=topic_id %}">Усі катеогрії розмітки</a>
+
+<div class="markings-container">
+    {% for marking in markings %}<!-- выводим список разметок для выбранной категории -->
+        <div class="sign-item">
+            <a href="{% url 'road_marking_details' topic_id=topic_id category_id=category_id code=marking.code %}">
+                <img src="{{ marking.image.url }}" alt="{{ marking.name }}">
+                <p>{{ marking.full_name_code }}</p>
+            </a>
+        </div>
+    {% empty %}
+        <p>Розмітка в цій категорії відсутні.</p>
+    {% endfor %}
+</div>
+
+<a href="{% url 'road_marking_categories' topic_id=topic_id %}">Усі катеогрії розмітки</a>
+{% endblock %}

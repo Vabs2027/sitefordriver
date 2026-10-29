@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1><strong>Категорія:</strong></h1>
+<p class="category-name">{{ category.name }}</p> <!-- Название категории -->
+
+<a href="{% url 'sign_categories' topic_id=topic_id %}">Усі катеогрії знаків</a>
+
+<div class="signs-container">
+    {% for sign in signs %}
+        <div class="sign-item">
+            <a href="{% url 'sign_detail' topic_id=topic_id category_id=category.id code=sign.code %}">
+                <img src="{{ sign.image.url }}" alt="{{ sign.name }}">
+                <p>{{ sign.full_name_code }}</p>
+            </a>
+        </div>
+    {% empty %}
+        <p>Знаки в цій категорії відсутні.</p>
+    {% endfor %}
+</div>
+
+<a href="{% url 'sign_categories' topic_id=topic_id %}">Усі катеогрії знаків</a>
+{% endblock %}

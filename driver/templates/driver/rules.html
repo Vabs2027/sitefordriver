@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Оберіть тему</h1>
+<h1>{{ title }}</h1>
+<ul>
+  {% for topic in topics %}
+    <li>{{ forloop.counter }}. <a href="{% url 'topic_detail' topic_id=topic.id %}">{{ topic.title }}</a></li>
+  {% endfor %}
+</ul>
+<a href="{% url 'home' %}">Голованя сторінка</a>
+
+<!--<h2>Коммента:</h2>-->
+<!--{% for comment in comments %}-->
+<!--    <div>-->
+<!--        <strong>{{ comment.author.username }}</strong> ({{ comment.created_at }}):-->
+<!--        <p>{{ comment.text }}</p>-->
+
+<!--        &lt;!&ndash; Отображение изображений, если есть &ndash;&gt;-->
+<!--        {% for image in comment.images.all %}-->
+<!--            <img src="{{ image.image.url }}" alt="{{ image.caption }}" style="max-width: 100%; height: auto;">-->
+<!--            {% if image.caption %}-->
+<!--                <p><em>{{ image.caption }}</em></p>-->
+<!--            {% endif %}-->
+<!--        {% endfor %}-->
+<!--    </div>-->
+<!--{% endfor %}-->
+
+{% endblock %}
